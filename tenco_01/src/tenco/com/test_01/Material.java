@@ -1,0 +1,6 @@
+package tenco.com.test_01;
+
+public abstract class Material {
+	// 관계를 위한 타입으로만 사용될 예정. --> new 키워드 사용 x
+	public abstract void doPrinting() ;
+} // end of class
