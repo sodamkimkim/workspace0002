@@ -1,18 +1,17 @@
 package dto;
 
+import lombok.ToString;
+
+/**
+ * 객체를 가지고 올때에 해당 키값의 밸류를 필요로 할때에면<br>
+ * 서브스트링으로 하나하나 나눠도 되긴 하겠지만 <br>
+ * 하나의 객체로 만들어서 그객체에 키값에 밸류를 넣어주는 것이 더 편하다.
+ * 
+ */
+@ToString
 public class Post {
 	public int userId;
 	public int id;
 	public String title;
 	public String body;
-	// 단순히 데이터만 담아서 전달..
-	// 이런 목적을 가진클래스들을 DTO라고 함
 }
-
-//statusCode : 200
-//{
-//  "userId": 1,
-//  "id": 1,
-//  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-//  "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-//}
