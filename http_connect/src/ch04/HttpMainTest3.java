@@ -38,7 +38,6 @@ public class HttpMainTest3 {
 
 			// HTTP 통신할때 스트림을 달아야 한다
 			BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
 			StringBuffer sb = new StringBuffer();
 			String line = null;
 
