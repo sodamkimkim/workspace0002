@@ -15,4 +15,5 @@ public interface IshopDbDao {
 	// 해당하는 user 정보 + 구매 내역 조회
 	void selectBuyInfoByUserId(String userId);
 
+	 
 }
