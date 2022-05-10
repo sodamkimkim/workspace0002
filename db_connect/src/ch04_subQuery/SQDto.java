@@ -1,4 +1,4 @@
-package ch05_join;
+package ch04_subQuery;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor // 빈생성자
 @ToString
-public class Dto {
+public class SQDto {
 	// employees
 	int employees_emp_no;
 	String employees_birth_date;
