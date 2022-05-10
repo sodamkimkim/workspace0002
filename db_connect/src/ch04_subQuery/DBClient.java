@@ -13,6 +13,8 @@ public class DBClient {
 	private static final String DB_HOST = "localhost";
 	private static final int DB_PORT = 3306;
 	private static final String DB_DATABASE_NAME = "employees";
+//	private final String DB_DATABASE_NAME = "employees"; --> getInstance 매개변수에 디비이름 받고, 이 변수는 static x 해도 될 듯
+	
 	private static final String DB_CHARSET = "UTF-8";
 	private static final String DB_USER_NAME = "root";
 	private static final String DB_PASSWORD = "asd123";
@@ -28,7 +30,9 @@ public class DBClient {
 
 	// static은 메인 뜨기전에 생성
 	// 이거는 프로그램이 시작될 때부터 생성
-	public static DBClient getInstance() {
+	public static DBClient getInstance() { // getInstance 매개변수로 디비이름 써도 됨
+		
+		
 		// 반환타입 DBClient
 		if (dbClient == null) {
 			dbClient = new DBClient();
