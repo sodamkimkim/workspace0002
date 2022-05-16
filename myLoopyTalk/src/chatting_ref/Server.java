@@ -1,5 +1,6 @@
 package chatting_ref;
 
+import java.awt.Color;
 import java.awt.ScrollPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,7 +23,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-
 public class Server extends JFrame implements ActionListener {
 
 	// GUI 자원
@@ -41,7 +41,6 @@ public class Server extends JFrame implements ActionListener {
 	// 그외 자원들
 	private Vector<UserInfomation> vc = new Vector<UserInfomation>();
 	private Vector<RoomInfomation> vc_room = new Vector<RoomInfomation>();
-	
 
 	public Server() {
 		init();
@@ -62,6 +61,7 @@ public class Server extends JFrame implements ActionListener {
 		scrollPane.setBounds(10, 10, 309, 229);
 		textArea = new JTextArea();
 		textArea.setBounds(12, 11, 310, 230);
+		textArea.setBackground(Color.cyan);
 		scrollPane.add(textArea);
 		contentPane.add(scrollPane);
 		textArea.setEditable(false);
@@ -131,13 +131,11 @@ public class Server extends JFrame implements ActionListener {
 			textArea.append("서버를 시작 하겠습니다.\n");
 			connect();
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "이미 사용중인 포트입니다.", "알림",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "이미 사용중인 포트입니다.", "알림", JOptionPane.ERROR_MESSAGE);
 			btnServerStart.setEnabled(true);
 			btnServerStop.setEnabled(false);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "잘못입력하였습니다.", "알림",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "잘못입력하였습니다.", "알림", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -153,8 +151,8 @@ public class Server extends JFrame implements ActionListener {
 						UserInfomation useInfo = new UserInfomation(socket);
 						// 각각의 스레드를 등록시켜준다.
 						useInfo.start();
-						//여기서 벡터에 등록하지 않음
-						
+						// 여기서 벡터에 등록하지 않음
+
 					} catch (IOException e) {
 						textArea.append("서버가 중지됨! 다시 스타트 버튼을 눌러주세요\n");
 						break;
@@ -204,15 +202,15 @@ public class Server extends JFrame implements ActionListener {
 
 				// 기존사용자들에게 신규 유저의 접속을 알린다.
 				broadCast("NewUser/" + nickName); // c1한테만 메시지가 전달된다.
-				
-				//c1,c2 (실행시점)
-				
+
+				// c1,c2 (실행시점)
+
 				// 자신에게 기존 사용자들을 알린다.
 				for (int i = 0; i < vc.size(); i++) {
 					UserInfomation uinf = vc.elementAt(i);
 					// 브로드 캐스트가 아니다(나와 연결되어있는 스트림을 통해서 보낸다)
-					//포문 돌아서,,
-					//닉네임을 가져오기 위해서.
+					// 포문 돌아서,,
+					// 닉네임을 가져오기 위해서.
 					// 개인한테 메시지를 보내는거.
 					sendmessage("OldUser/" + uinf.nickName);
 				}
@@ -225,8 +223,7 @@ public class Server extends JFrame implements ActionListener {
 				vc.add(this);
 
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null, "Stream설정에러!", "알림",
-						JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Stream설정에러!", "알림", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -236,7 +233,7 @@ public class Server extends JFrame implements ActionListener {
 			while (true) {
 				try {
 					String msg = dis.readUTF();
-					textArea.append("[["+ nickName + "]]" + msg + "\n");
+					textArea.append("[[" + nickName + "]]" + msg + "\n");
 					inmessage(msg);
 				} catch (IOException e) {
 					try {
@@ -247,7 +244,7 @@ public class Server extends JFrame implements ActionListener {
 						vc.remove(this);
 						vc_room.remove(this);
 						broadCast("UserOut/" + nickName);
-						broadCast("ErrorOutRoom/"+myCurrentRoomName);
+						broadCast("ErrorOutRoom/" + myCurrentRoomName);
 						broadCast("UserData_Updata/ok");
 						break;
 					} catch (IOException e1) {
@@ -313,8 +310,7 @@ public class Server extends JFrame implements ActionListener {
 					RoomInfomation r = vc_room.elementAt(i);
 					if (r.roomName.equals(message)) {
 						// 신규접속자를 알린다.
-						r.roomBroadcast("Chatting/[[알림]]/(((" + nickName
-								+ " 입장))) ");
+						r.roomBroadcast("Chatting/[[알림]]/(((" + nickName + " 입장))) ");
 						r.addUser(this); // 해당 룸 객체에 자신을 추가시킨다.
 						sendmessage("JoinRoom/" + message);
 					}
@@ -339,7 +335,7 @@ public class Server extends JFrame implements ActionListener {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 
 	// 내부클래스
@@ -351,7 +347,7 @@ public class Server extends JFrame implements ActionListener {
 		public RoomInfomation(String roomName, UserInfomation u) {
 			this.roomName = roomName;
 			this.room_user_vc.add(u);
-			//와우 대박. ㅋㅋ
+			// 와우 대박. ㅋㅋ
 			u.myCurrentRoomName = roomName;
 		}
 
@@ -365,6 +361,7 @@ public class Server extends JFrame implements ActionListener {
 		private void addUser(UserInfomation u) {
 			room_user_vc.add(u);
 		}
+
 		@Override
 		public String toString() {
 			return roomName;
@@ -378,7 +375,7 @@ public class Server extends JFrame implements ActionListener {
 					RoomInfomation r = vc_room.elementAt(i);
 					if (r.roomName.equals(roomName)) {
 						vc_room.remove(this);
-						broadCast("EmptyRoom/"+roomName);
+						broadCast("EmptyRoom/" + roomName);
 						broadCast("UserData_Updata/ok");
 						break;
 					}
@@ -386,8 +383,8 @@ public class Server extends JFrame implements ActionListener {
 			}
 		}
 	}
+
 	public static void main(String[] args) {
 		new Server();
 	}
 }
-

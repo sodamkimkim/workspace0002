@@ -21,9 +21,9 @@ public class MainTest1 {
 			return x + y;
 		};
 		System.out.println(iAddLambda.add(10, 20));
-		
+
 		// 결론
-		// 기본 OOP문법 :  인터페이스를 선언 --> 익명 구현 객체 --> 사용
+		// 기본 OOP문법 : 인터페이스를 선언 --> 익명 구현 객체 --> 사용
 		// 람다 표현식 : 인터페이스 선언 --> 람다 표현식으로 변경 --> 사용
 	}
 }

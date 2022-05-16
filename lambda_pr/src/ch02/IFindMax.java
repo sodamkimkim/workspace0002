@@ -1,4 +1,4 @@
-package ch02_findMax;
+package ch02;
 
 @FunctionalInterface
 public interface IFindMax {

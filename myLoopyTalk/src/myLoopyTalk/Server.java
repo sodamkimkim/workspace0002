@@ -73,7 +73,8 @@ public class Server extends JFrame implements IChatMessage {
 
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "잘못입력하셨습니다.", "알림", JOptionPane.ERROR_MESSAGE);
-			System.out.println("startNetwork예외발생 : " + e.getMessage());
+			System.out.println("startNetwork예외발생 : "
+					+ "" + e.getMessage());
 			e.getStackTrace();
 		}
 	}
