@@ -37,6 +37,7 @@ public class Server extends JFrame implements ActionListener {
 	private ServerSocket server_socket;
 	private Socket socket;
 	private int port;
+	
 
 	// 그외 자원들
 	private Vector<UserInfomation> vc = new Vector<UserInfomation>();

@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,6 +16,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ServerFrame extends JFrame implements ActionListener {
 	private JPanel mainPane;
 	private ScrollPane scrollPane;
@@ -33,8 +36,9 @@ public class ServerFrame extends JFrame implements ActionListener {
 	private JButton btnLogStart;
 	private JButton btnLogStop;
 
-	// 네트워크 자원들
+	// GUI 외
 	private Server server;
+	private ServerFrame mContext = this;
 
 	public ServerFrame() {
 		initData();
@@ -43,7 +47,7 @@ public class ServerFrame extends JFrame implements ActionListener {
 	}
 
 	private void initData() {
-		server = new Server();
+		server = new Server(mContext);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 410);
 		setTitle("myLoopyTalk");
@@ -97,6 +101,7 @@ public class ServerFrame extends JFrame implements ActionListener {
 		btnServerStop.setBackground(Color.LIGHT_GRAY);
 		btnServerStop.setForeground(Color.darkGray);
 		btnServerStop.setBounds(170, 260, 150, 30);
+		btnServerStop.setEnabled(false);
 		mainPane.add(btnServerStop);
 
 		// 로그시작버튼
@@ -113,6 +118,7 @@ public class ServerFrame extends JFrame implements ActionListener {
 		btnLogStop.setBackground(Color.lightGray);
 		btnLogStop.setForeground(Color.darkGray);
 		btnLogStop.setBounds(170, 300, 150, 30);
+		btnLogStop.setEnabled(false);
 		mainPane.add(btnLogStop);
 
 		setContentPane(mainPane);
@@ -123,12 +129,16 @@ public class ServerFrame extends JFrame implements ActionListener {
 		fldPortNum.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				fldPortNum.setText(null);
+				if (fldPortNum.getText().equals("포트번호를 입력하세요")) {
+					fldPortNum.setText(null);
+				}
 			}
 
 			@Override
 			public void focusLost(FocusEvent e) {
-				fldPortNum.setText("포트번호를 입력하세요");
+				if (fldPortNum.getText().equals(null)) {
+					fldPortNum.setText("포트번호를 입력하세요");
+				}
 			}
 		});
 
@@ -147,6 +157,7 @@ public class ServerFrame extends JFrame implements ActionListener {
 				// port번호 넣어주고
 				// serverStart되어야함
 				server.setPortNum(Integer.parseInt(fldPortNum.getText()));
+				server.startNetwork();
 			}
 		} else if (e.getSource() == btnServerStop) {
 
